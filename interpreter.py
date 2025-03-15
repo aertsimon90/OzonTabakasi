@@ -265,11 +265,11 @@ class Interpreter:
 def to_python(file):
 	import requests
 	print("Converting to python...")
-	content = requests.get("", timeout=10).text
+	content = requests.get("https://raw.githubusercontent.com/aertsimon90/OzonTabakasi/refs/heads/main/interpreter.py", timeout=10).text
 	content = content[:content.find("""# start
 # <MAIN FUNCTION SEPERATOR>
 # <MAIN FUNCTION SEPERATOR>
-# <MAIN FUNCTION SEPERATOR>
+# <MAIN FUNCTION """+"""SEPERATOR>
 # <MAIN FUNCTION SEPERATOR>
 # <MAIN FUNCTION SEPERATOR>
 # stop""")]
@@ -517,8 +517,8 @@ With this syntax, OzonTabakasi offers a structured, powerful, and customizable w
 				to_program_pyinstaller(file)
 			else:
 				with open(argvs[1], "r", encoding="utf-8") as f:
-				content = f.read()
-			Interpreter().execute(content)
+					content = f.read()
+				Interpreter().execute(content)
 		else:
 			with open(argvs[1], "r", encoding="utf-8") as f:
 				content = f.read()
