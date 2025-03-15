@@ -1,6 +1,7 @@
 import sys
 import time
 import os
+import shutil
 
 class Interpreter:
 	def __init__(self):
@@ -279,8 +280,64 @@ def to_python(file):
 	content = content+addcode
 	with open("ot_output", "w", encoding="utf-8") as f:
 		f.write(content)
-
-
+	print("YOUR PYTHON CODE IN 'ot_output' FILE!")
+def to_c(file):
+	to_python(file)
+	print("Importing Cython...")
+	from Cython.Build import cythonize
+	print("Importing SetupTools...")
+	from setuptools import setup
+	print("ot_output to ot_output.py...")
+	os.rename("ot_output", "ot_output.py")
+	print("creating ot_output.c...")
+	setup(ext_modules=cythonize(["ot_output.py"], language_level="3"), script_args=["build_ext", "--inplace"])
+	print("renaming ot_output.c to ot_output...")
+	os.rename("ot_output.c", "ot_output")
+	print("removing ot_output.py")
+	os.remove("ot_output.py")
+	print("YOUR C CODE IN 'ot_output' FILE!")
+def to_program(file):
+	print("Converting to C File...")
+	to_c(file)
+	print("Updating GCC...")
+	if os.name == "nt":
+		os.system("winget install GCC")
+	else:
+		os.system("pkg install gcc -y")
+		os.system("sudo apt install gcc -y")
+		os.system("sudo pacman -S gcc")
+		os.system("sudo dnf install gcc")
+		os.system("sudo zypper install gcc")
+		os.system("sudo apk add gcc")
+		os.system("sudo emerge --ask sys-devel/gcc")
+	print("C file to executable file...")
+	os.system("gcc ot_output -o ot_output")
+	print("YOUR EXECUTABLE PROGRAM CODE IN 'ot_output' FILE!")
+def to_program_pyinstaller(file):
+	to_python(file)
+	print("Updating PyInstaller...")
+	os.system("python -m pip install pyinstaller")
+	print()
+	print("--- WHAT DO YOU WANT ? ---")
+	print()
+	args = ["--onefile"]
+	if os.name not "nt":
+		nooutput = input("Hide terminal/console screen? (Y/n): ").lower()
+		if nooutput.startswith("y"):
+			args.append("--no-console")
+	icon = input("Want program icon? (Y/n): ").lower()
+	if icon.startswith("y"):
+		iconfile = input("Icon file name or path (just use .ico): ")
+		args.append("-i "+iconfile)
+	command = "python -m PyInstaller ot_output "+(" ".join(args))
+	print(f"My Command: {command}")
+	os.system(command)
+	if "dist" in os.listdir():
+		if os.name == "nt":
+			shutil.copy("dist/ot_output.exe", "ot_output")
+		else:
+			shutil.copy("dist/ot_output", "ot_output")
+	print("YOUR EXECUTABLE PROGRAM CODE IN 'ot_output' FILE!")
 
 # start
 # <MAIN FUNCTION SEPERATOR>
