@@ -280,6 +280,7 @@ class Interpreter:
 			sys.exit()
 		else:
 			return None
+
 def to_python(file):
 	import requests
 	print("Converting to python...")
@@ -564,7 +565,167 @@ Conclusion
 These are the fundamental syntax rules of OzonTabakasi.
 Understanding list, dictionary, math, and seed structures is crucial for writing proper code.
 
-With this syntax, OzonTabakasi offers a structured, powerful, and customizable way to process data efficiently.""")
+With this syntax, OzonTabakasi offers a structured, powerful, and customizable way to process data efficiently.
+
+Data Types in OzonTabakası
+
+The OzonTabakası programming language supports various data types that are used to represent different kinds of values. These data types enable structured data manipulation within the language, including numbers, strings, lists, dictionaries, boolean values, and more. Below is a detailed explanation of each data type and its usage.
+
+1. Integer (int;/value)
+
+An integer represents a whole number, which can be positive or negative. It does not include any fractional or decimal part. In OzonTabakası, an integer is declared using the prefix int;/.
+
+Example Usage:
+
+int;/12345
+
+This represents the integer 12345.
+
+2. Floating-point Number (flt;/value)
+
+A floating-point number, or float, represents a number that has a fractional part, usually separated by a decimal point. It allows for more precision than integers and is typically used for calculations requiring decimals.
+
+Example Usage:
+
+flt;/3.14159
+
+This represents the floating-point number 3.14159, a common approximation of Pi.
+
+3. String (str;/value)
+
+A string represents a sequence of characters. Strings are commonly used to store text and can include letters, numbers, spaces, punctuation, and special characters. In OzonTabakası, a string is denoted with the prefix str;/.
+
+Example Usage:
+
+str;/Hello, World!
+
+This represents the string "Hello, World!".
+
+---
+
+4. Formatted String (fstr;/value)
+
+A formatted string is a type of string that allows embedding of variables directly into the string. Unlike regular strings, fstr strings in OzonTabakası only allow embedding variables and do not provide additional functionality. It is used when you want to include the value of a variable within a string.
+
+Example Usage:
+
+fstr;/Hello, <@name>!
+
+Here, the string contains a placeholder <@name>, which can be replaced with the actual value of the name variable during runtime.
+
+Example with Variable:
+
+var;/str;/name!c0/stdin-readline;/
+/ot0/new;/
+stdout-write;/fstr;/Hello, <@name>!
+
+In this example:
+
+The name variable is populated by reading a line from user input (stdin-readline).
+
+The program then outputs a personalized greeting using the fstr;/ format.
+
+
+However, it is important to note that fstr does not perform any other operations like calculations or formatting beyond embedding variables into the string. It is specifically for variable interpolation.
+
+
+5. List (ls;/value!,{listn}/value!,{listn}/...)
+
+A list is an ordered collection of items, which can be of various data types such as integers, strings, floats, and even other lists. Lists in OzonTabakası are defined with the prefix ls;/ and allow multiple items separated by the delimiter !,{listn}/.
+
+Example Usage:
+
+ls;/int;/12345!,0/str;/Hello!!,0/str;/Test 123!,0/flt;/4.567!,0/ls;/str;/Hello!,1/str;/Hello2
+
+This defines a list containing several elements of various data types (integers, strings, floats, and even another list). The result would be:
+
+[12345, "Hello!", "Test 123", 4.567, ["Hello", "Hello2"]]
+
+Explanation:
+
+The numbers 12345 and 4.567 are integers and floats.
+
+The strings "Hello!" and "Test 123" are standard strings.
+
+The list ["Hello", "Hello2"] is nested inside the main list.
+
+
+6. Dictionary (dict;/key!:{dictn}:/value!.0/key!:{dictn}:/value!.0/...)
+
+A dictionary, or map, is a collection of key-value pairs where each key is unique, and each key maps to a value. In OzonTabakası, dictionaries are defined with the prefix dict;/, and each key-value pair is separated by the !:{dictn}:/ delimiter.
+
+Example Usage:
+
+dict;/str;/Name!:0:/str;/Simon!.0/str;/Surname!:0:/str;/Scap!.0/str;/Age!:0:/int;/20!.0/str;/Money!:0:/flt;/15000.5!.0/str;/City!:0:/str;/Erzincan!.0/str;/Messages!:0:/dict;/str;/1!:1:/str;/Hello!!.1/str;/2!:1:/str;/My name is Simon
+
+This defines a dictionary with several key-value pairs, including nested dictionaries. The result would be:
+
+{
+  "Name": "Simon",
+  "Surname": "Scap",
+  "Age": 20,
+  "Money": 15000.50,
+  "City": "Erzincan",
+  "Messages": {
+    "1": "Hello!",
+    "2": "My name is Simon"
+  }
+}
+
+Explanation:
+
+The dictionary contains basic information such as Name, Surname, Age, Money, and City.
+
+The Messages key maps to another dictionary, which includes two messages.
+
+
+7. Boolean (bool;/1 or 0)
+
+A boolean value represents a true or false state. It can be either 1 (True) or 0 (False). This data type is commonly used for conditional checks and logical operations.
+
+Example Usage:
+
+bool;/1
+
+This represents the boolean value True.
+
+bool;/0
+
+This represents the boolean value False.
+
+8. Not a Number (NaN, nan;/nan)
+
+The NaN value, which stands for Not a Number, is used to represent undefined or unrepresentable values, such as the result of dividing zero by zero. In OzonTabakası, nan;/ is used to denote this special value.
+
+Example Usage:
+
+nan;/nan
+
+This represents the None or NaN value, which indicates that a value is undefined or not applicable.
+
+
+---
+
+Summary
+
+int;/value: Represents integer values (whole numbers).
+
+flt;/value: Represents floating-point numbers (decimal values).
+
+str;/value: Represents string values (sequences of characters).
+
+fstr;/value: Represents formatted strings that allow dynamic embedding of variables.
+
+ls;/value: Represents a list (ordered collection of items).
+
+dict;/key: Represents a dictionary (collection of key-value pairs).
+
+bool;/1 or 0: Represents boolean values (True or False).
+
+nan;/nan: Represents undefined or NaN values (None).
+
+
+These data types, combined with OzonTabakası's syntax, allow for the creation of complex, structured data and operations, enabling powerful manipulation of variables, user input, and data structures in programs written in OzonTabakası.""")
 			else:
 				interpreter.execute(i)
 	elif len(argvs) >= 2:
