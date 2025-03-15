@@ -255,6 +255,23 @@ class Interpreter:
 			joiner = value[0]
 			value = value[1]
 			return joiner.join(value)
+		elif runner == "range":
+			value = self.seperator(seed, value, listn, dictn, mathn)
+			min = value[0]
+			max = value[1]
+			return list(range(min, max))
+		elif runner == "loop":
+			value = self.seperator(seed, value, listn, dictn, mathn)
+			count = value[0]
+			code = value[1]
+			for _ in range(count):
+				self.execute(code, listn, dictn, mathn, seed+1)
+		elif runner == "while":
+			value = self.seperator(seed, value, listn, dictn, mathn)
+			stat = value[0]
+			code = value[1]
+			while self.execute(stat, listn, dictn, mathn, seed+1):
+				self.execute(code, listn, dictn, mathn, seed+1)
 		elif runner == "argv":
 			return sys.argv
 		elif runner == "environ":
