@@ -321,7 +321,7 @@ def to_program_pyinstaller(file):
 	print("--- WHAT DO YOU WANT ? ---")
 	print()
 	args = ["--onefile"]
-	if os.name not "nt":
+	if os.name != "nt":
 		nooutput = input("Hide terminal/console screen? (Y/n): ").lower()
 		if nooutput.startswith("y"):
 			args.append("--no-console")
