@@ -2,10 +2,12 @@ import sys
 import time
 import os
 import shutil
+import uuid
 
 class Interpreter:
 	def __init__(self):
 		self.vars = {}
+		self.system_vars = {}
 	def repr(self, value, listn=0, dictn=0):
 		t = str(type(value)).split("<class '")[1].split("'>")[0]
 		if t == "int":
@@ -278,6 +280,34 @@ class Interpreter:
 			return dict(os.environ)
 		elif runner == "exit":
 			sys.exit()
+		elif runner == "openfile":
+			value = self.seperator(seed, value, listn, dictn, mathn)
+			file = value[0]
+			mode = value[1]
+			uid = str(uuid.uuid4())
+			self.system_vars[uid] = open(file, mode)
+			return uid
+		elif runner == "writefile":
+			value = self.seperator(seed, value, listn, dictn, mathn)
+			uid = value[0]
+			content = value[1]
+			self.system_vars[uid].write(content)
+		elif runner == "readfile":
+			uid = self.execute(value, listn, dictn, mathn, seed)
+			return self.system_vars[uid].read()
+		elif runner == "closefile":
+			uid = self.execute(value, listn, dictn, mathn, seed)
+			self.system_vars[uid].read()
+			try:
+				del self.system_vars[uuid]
+			except:
+				pass
+		elif runner == "debug":
+			try:
+				return self.execute(value, listn, dictn, mathn, seed)
+			except Exception as e:
+				print(e)
+				return str(e)
 		else:
 			return None
 
@@ -761,7 +791,261 @@ bool;/1 or 0: Represents boolean values (True or False).
 nan;/nan: Represents undefined or NaN values (None).
 
 
-These data types, combined with OzonTabakası's syntax, allow for the creation of complex, structured data and operations, enabling powerful manipulation of variables, user input, and data structures in programs written in OzonTabakası.""")
+These data types, combined with OzonTabakası's syntax, allow for the creation of complex, structured data and operations, enabling powerful manipulation of variables, user input, and data structures in programs written in OzonTabakası.
+
+OzonTabakası Mathematics: Detailed Explanation
+
+OzonTabakası programming language has a unique mathematical system that differs from standard arithmetic operations. All mathematical operations start with the "math;/" command and follow a structured set of rules.
+
+This system allows hierarchical execution of operations and supports nested expressions, making it highly flexible for dynamic calculations.
+
+
+---
+
+Mathematical Command Structure
+
+Mathematical operations follow this basic format:
+
+math;/method:value!m{mathn}/method:value!m{mathn}/...
+
+Each operation consists of three key components:
+
+1. method: Defines the mathematical operation to be performed. Supported operations include:
+
+"+" → Addition
+
+"-" → Subtraction
+
+"*" → Multiplication
+
+"/" → Division
+
+""** → Exponentiation (Power)
+
+"%" → Modulus (Remainder)
+
+"//" → Floor Division
+
+
+
+2. value: The value to be processed, which must be one of the following types:
+
+int;/ (Integer)
+
+flt;/ (Floating point number)
+
+str;/ (String, supported in certain operations)
+
+ls;/ (List, supported in certain operations)
+
+
+
+3. m{mathn}: Defines the position of the operation within the mathematical block.
+
+!m0/ → Marks the main operation block.
+
+!m1/, !m2/, etc., indicate nested operations.
+
+
+
+
+
+---
+
+General Principles of Mathematical Operations
+
+Mathematical operations in OzonTabakası follow a structured process to ensure correct execution:
+
+1. The first method must always be "+"
+
+The "+" method initializes the mathematical block.
+
+Other operations build upon this initialization.
+
+
+
+2. Nested operations are supported
+
+You can structure complex expressions using nested operations.
+
+
+
+3. Operations are evaluated from top to bottom
+
+Execution flows sequentially, allowing structured calculations.
+
+
+
+
+
+---
+
+Example Mathematical Operations
+
+Here are some example expressions with explanations:
+
+1. Basic Addition (1 + 1)
+
+math;/
+  +:int;/1!m0/
+  +:int;/1
+
+Explanation:
+
+The first line initializes the block with + and the value 1.
+
+The second line adds another 1 to the sum.
+
+Final result: 2
+
+
+
+---
+
+2. Basic Multiplication (2 * 2)
+
+math;/
+  +:int;/2!m0/
+  *:int;/2
+
+Explanation:
+
+The block starts with 2.
+
+The value is multiplied by 2.
+
+Final result: 4
+
+
+
+---
+
+3. Complex Operation ( (5 * 4) / 2 )
+
+math;/
+  +:int;/5!m0/
+  *:int;/4!m0/
+  /:int;/2
+
+Explanation:
+
+The first line initializes 5.
+
+The second line multiplies by 4 (result: 20).
+
+The third line divides by 2 (result: 10).
+
+
+
+---
+
+4. Using Nested Operations
+
+The following expression achieves the same result as the previous one but uses a nested structure:
+
+math;/
+  +:math;/
+    +:int;/5!m1/
+    *:int;/4!m0/
+  /:int;/2
+
+Explanation:
+
+The inner math;/ block is evaluated first.
+
+Inside it, 5 is added to 4 multiplied by 4 (result: 20).
+
+The outer block then divides by 2, yielding 10.
+
+
+This structure enables more complex expressions.
+
+
+---
+
+5. Exponentiation (2³)
+
+math;/
+  +:int;/2!m0/
+  **:int;/3
+
+Explanation:
+
+The base 2 is initialized.
+
+It is raised to the power of 3.
+
+Final result: 8
+
+
+
+---
+
+6. String Operations
+
+String operations are limited but supported in specific cases:
+
+math;/
+  +:str;/Hello! !m0/
+  +:str;/World!
+
+Explanation:
+
+The strings "Hello! " and "World!" are concatenated.
+
+Final result: "Hello! World!"
+
+
+
+---
+
+The Importance of Nested Operations
+
+Mathematical expressions in OzonTabakası can be nested to define complex calculations explicitly.
+
+For example, consider the expression:
+( (10 + 2) * 3 ) - 5
+
+This can be written as:
+
+math;/
+  +:math;/
+    +:int;/10!m1/
+    +:int;/2!m0/
+  *:int;/3!m0/
+  -:int;/5
+
+Explanation:
+
+The inner math;/ block computes (10 + 2) → 12.
+
+The outer block multiplies 12 by 3 (result: 36).
+
+Finally, 5 is subtracted, yielding 31.
+
+
+This structure ensures clear execution order and modular calculations.
+
+
+---
+
+Conclusion
+
+The OzonTabakası mathematical system provides a structured way to handle mathematical operations. Key advantages include:
+
+1. Improved readability and modularity.
+
+
+2. Support for nested calculations.
+
+
+3. Precise control over execution order.
+
+
+
+By following this system, users can easily construct and manage complex expressions, making it highly adaptable for advanced computations.
+
+""")
 			else:
 				interpreter.execute(i)
 	elif len(argvs) >= 2:
