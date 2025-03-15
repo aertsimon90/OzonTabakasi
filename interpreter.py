@@ -370,11 +370,47 @@ if __name__ == "__main__":
 	if len(argvs) == 0:
 		raise SystemError("Error: System Arguments not found.")
 	elif len(argvs) == 1:
-		print("Running on Command Line mode.\nOZONTABAKASI v1.0.0 (Low Level Programming Language) (by aertsimon90 visit on github)\nNOTE: This programming language tests and challenges your ordinary programming skills. Difficult to use but easy to learn, this programming language is written by a highly optimized interpreter.\nIf you don't know what to do, we have prepared a simple text that makes learning easier, so don't worry, we support you in these matters. To reach the text, just type 'help'.\n")
+		print("Running on Command Line mode.\nOZONTABAKASI v1.0.0 (Low Level Programming Language) (by aertsimon90 visit on github)\nNOTE: This programming language tests and challenges your ordinary programming skills. Difficult to use but easy to learn, this programming language is written by a highly optimized interpreter.\nIf you don't know what to do, we have prepared a simple text that makes learning easier, so don't worry, we support you in these matters. To reach the text, just type 'help'.\nIf you want to test the speed of the current programming language interpreter, just type 'speedtest' and you can see if it is really optimized enough.\nThe current interpreter appears to be based on the 'PYTHON' language. To see the interpreter arguments, restart the program and add only the '--help' argument. (You can use arguments for compile the OzonTabakasi language to binary or exe program)\n")
 		interpreter = Interpreter()
 		while True:
 			i = input(">>> ")
-			if i == "help":
+			if i == "speedtest":
+				print("Testing speed of: Screen Write.")
+				start = time.time()
+				interpreter.execute("stdout-write;/str;/Hello, World!\n")
+				end = time.time()
+				otsw = end-start
+				print(f"Result Time on OzonTabakasi (seconds): {otsw:.15f}")
+				start = time.time()
+				print("Hello, World!")
+				end = time.time()
+				pysw = end-start
+				print(f"Result Time on PYTHON (seconds): {pysw:.15f}")
+
+				print("Testing speed of: Basic Calculation.")
+				start = time.time()
+				interpreter.execute("var;/str;/testr123!c0/math;/+:int;/150!m0/*:int;/100")
+				end = time.time()
+				otsw = end-start
+				print(f"Result Time on OzonTabakasi (seconds): {otsw:.15f}")
+				start = time.time()
+				testr123 = 150*100
+				end = time.time()
+				pysw = end-start
+				print(f"Result Time on PYTHON (seconds): {pysw:.15f}")
+				
+				print("Testing speed of: Big Calculation.")
+				start = time.time()
+				interpreter.execute("var;/str;/testr123!c0/math;/+:int;/150!m0/*:int;/100!m0//:flt;/283.382627281729284828!m0/*:flt;/8272827273728817227372.2836272736")
+				end = time.time()
+				otsw = end-start
+				print(f"Result Time on OzonTabakasi (seconds): {otsw:.15f}")
+				start = time.time()
+				testr123 = ((150*100)/283.382627281729284828)*8272827273728817227372.2836272736
+				end = time.time()
+				pysw = end-start
+				print(f"Result Time on PYTHON (seconds): {pysw:.15f}")
+			elif i == "help":
 				print("""Syntax Rules of OzonTabakasi
 
 Every OzonTabakasi code consists of several key values: listn, dictn, mathn, and seed.
