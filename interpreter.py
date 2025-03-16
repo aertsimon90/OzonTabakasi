@@ -51,8 +51,6 @@ class Interpreter:
 			for hh in value.split(f"\n/ot{seed}/new;/\n"):
 				self.execute(hh, listn, dictn, mathn, seed)
 			return
-		if "#//>>" in value:
-			value = value[:value.find("#//>>")]
 		value = value.lstrip()
 		runner = value[:value.find(";/")]
 		value = value[value.find(";/")+2:]
@@ -1045,7 +1043,196 @@ The OzonTabakası mathematical system provides a structured way to handle mathem
 
 By following this system, users can easily construct and manage complex expressions, making it highly adaptable for advanced computations.
 
-""")
+OzonTabakası Interpreter Operations
+
+OzonTabakası has the right to use its own interpreter or compiler to facilitate execution. These system commands allow the OzonTabakası language to execute code within itself or interact with external languages such as Python or C.
+
+
+---
+
+System Execution Commands
+
+System-level execution commands allow OzonTabakası to interact with the host machine's interpreter.
+
+1. Executing Code in the System Interpreter
+
+sysexec;/value
+
+Executes the given string value in the host system's interpreter.
+
+The value must be a valid code string.
+
+If Python is available, it runs as Python code. If C is available, it compiles and runs as C code.
+
+
+✅ Example (Running Python Code)
+
+sysexec;/str;/print('Hello from Python!')
+
+🔹 If the system interpreter is Python, the following code is executed:
+
+print('Hello from Python!')
+
+🔹 Output:
+
+Hello from Python!
+
+✅ Example (Running C Code - If the system interpreter is C)
+
+sysexec;/str;/#include <stdio.h>
+int main() { printf('Hello from C!'); return 0; }
+
+🔹 This command runs within the C interpreter and produces output.
+
+
+---
+
+syseval;/value
+
+Similar to sysexec;/value, but it returns the result of the executed code.
+
+Used for evaluating external code and retrieving its output.
+
+
+✅ Example (Evaluating a Mathematical Operation in Python)
+
+syseval;/str;/5 + 5
+
+🔹 If the system interpreter is Python:
+
+5 + 5
+
+🔹 Result:
+
+10
+
+🔹 OzonTabakası interprets the return value as:
+
+int;/10
+
+✅ Example (Evaluating a String in Python)
+
+syseval;/str;/'Hello, World!'
+
+🔹 Returned output:
+
+str;/Hello, World!
+
+
+---
+
+OzonTabakası Execution Commands
+
+These commands allow code execution within the OzonTabakası language itself.
+
+2. Executing OzonTabakası Code
+
+exec;/value
+
+Runs the given string value as an OzonTabakası script.
+
+The value must be valid OzonTabakası code.
+
+
+✅ Example (Printing to the Console)
+
+exec;/str;/stdout-write;/str;/Hello, OzonTabakası!
+
+🔹 Executed OzonTabakası code:
+
+stdout-write;/str;/Hello, OzonTabakası!
+
+🔹 Output:
+
+Hello, OzonTabakası!
+
+
+---
+
+eval;/value
+
+Similar to exec;/value, but it returns the result of the executed code.
+
+Useful for working with mathematical expressions or variables.
+
+
+✅ Example (Evaluating an Integer Value)
+
+eval;/str;/int;/15
+
+🔹 Returned result:
+
+int;/15
+
+✅ Example (Evaluating a Mathematical Expression)
+
+eval;/str;/math;/
+  +:int;/5!m0/
+  *:int;/3
+
+🔹 Executed code:
+
+math;/
+  +:int;/5!m0/
+  *:int;/3
+
+🔹 Result:
+
+int;/15
+
+
+---
+
+3. Converting Data to OzonTabakası Syntax
+
+repr;/value
+
+Converts any value into a string representation formatted according to OzonTabakası syntax.
+
+Useful for saving and restoring data.
+
+
+✅ Example (Converting a Floating-Point Number to OzonTabakası Syntax)
+
+repr;/flt;/3.14
+
+🔹 Returned result:
+
+str;/flt;/3.14
+
+✅ Example (Saving and Restoring a Variable's Value)
+
+var;/str;/pi!c0/flt;/3.14
+/ot0/new;/
+stdout-write;/repr;/varvalue;/str;/pi
+
+🔹 Execution steps:
+
+1. A variable named pi is defined with a value of 3.14.
+
+
+2. The repr command converts the variable into the format "flt;/3.14".
+
+
+3. The result is printed to the screen or saved to a file.
+
+
+4. The saved value can be reloaded exactly as it was saved.
+
+
+
+
+---
+
+Conclusion
+
+The OzonTabakası interpreter supports the following operations:
+
+✔ Executing external system code (sysexec;/, syseval;/)
+✔ Running and evaluating OzonTabakası code (exec;/, eval;/)
+✔ Converting data into OzonTabakası syntax (repr;/)
+
+These features make OzonTabakası a powerful interpretation system that supports dynamic code execution, flexible evaluation, and precise data storage.""")
 			else:
 				interpreter.execute(i)
 	elif len(argvs) >= 2:
